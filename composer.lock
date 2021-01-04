@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "de04174987239e82179caeca5f0ee247",
+    "content-hash": "38dd644c00c209bbd18a050c6624a863",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1242,6 +1242,72 @@
                 "validator"
             ],
             "time": "2020-11-14T15:56:27+00:00"
+        },
+        {
+            "name": "knplabs/knp-time-bundle",
+            "version": "v1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpTimeBundle.git",
+                "reference": "2210e5e8f5ece34b8ec65fa5fe07aa48205f0ce8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpTimeBundle/zipball/2210e5e8f5ece34b8ec65fa5fe07aa48205f0ce8",
+                "reference": "2210e5e8f5ece34b8ec65fa5fe07aa48205f0ce8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "symfony/config": "~3.4|^4.3|^5.0",
+                "symfony/dependency-injection": "~3.4|^4.3|^5.0",
+                "symfony/translation": "^4.3|^5.0"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^4.3|^5.0",
+                "symfony/phpunit-bridge": "^4.3|^5.0",
+                "symfony/templating": "~3.4|^4.3|^5.0",
+                "symfony/twig-bundle": "^4.3|^5.0"
+            },
+            "suggest": {
+                "symfony/twig-bundle": "to use the Twig `time_diff()` function or `|ago` filter"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Bundle\\TimeBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/KnpTimeBundle/contributors"
+                }
+            ],
+            "description": "Making your dates look sensible and descriptive",
+            "homepage": "http://github.com/KnpLabs/KnpTimeBundle",
+            "keywords": [
+                "bundle",
+                "date",
+                "descriptive time",
+                "knp",
+                "knplabs",
+                "time"
+            ],
+            "time": "2020-12-16T16:46:24+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5765,6 +5831,61 @@
                 "twig"
             ],
             "time": "2020-05-21T09:56:39+00:00"
+        },
+        {
+            "name": "twig/string-extra",
+            "version": "v3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/string-extra.git",
+                "reference": "8e9b436d25b9473e9dc163c83cff1eb9f5dd68c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/string-extra/zipball/8e9b436d25b9473e9dc163c83cff1eb9f5dd68c4",
+                "reference": "8e9b436d25b9473e9dc163c83cff1eb9f5dd68c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/string": "^5.0",
+                "twig/twig": "^2.4|^3.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.4.9|^5.0.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.12-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\String\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for Symfony String",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "html",
+                "string",
+                "twig",
+                "unicode"
+            ],
+            "time": "2020-05-21T09:54:27+00:00"
         },
         {
             "name": "twig/twig",
