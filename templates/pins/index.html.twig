@@ -9,7 +9,7 @@
         {% for pin in pins %}
             <article>
             {% if vich_uploader_asset(pin) is null %}
-                <img src="{{ asset('media/default-avatar.jpg') | imagine_filter('squared_thumbnail_medium') }}" alt="default pin">
+                <img src="{{ asset('images/default-avatar.jpg') | imagine_filter('squared_thumbnail_medium') }}" alt="default pin">
                 {% else %}
                     <img src="{{ vich_uploader_asset(pin) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ pin.title }}">
             {% endif %}
