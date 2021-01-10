@@ -3,13 +3,23 @@
 {% block title 'Find all the best pins on earth!' %}
 
 {% block body %}
-    <h1>{{ pluralize(pins|length, 'Pin') }}</h1>
+    {% if pins|length > 0 %}
+        <h1 class="text-center text-muted mb-4">{{ pluralize(pins|length, 'Pin') }}</h1>
 
-    {% for pin in pins %}
-        <article>
-            <h2><a href="{{ path('app_pins_show', {id: pin.id})}}">{{ pin.title }}</a></h2>
-            <p>{{ pin.description | u.truncate(10, '...') }}</p>
-            <p>submitted {{ pin.createdAt|ago }}</p>
-        </article>
-    {% endfor %}
+        {% for pin in pins %}
+            <article>
+            {% if vich_uploader_asset(pin) is null %}
+                <img src="{{ asset('media/default-avatar.jpg') | imagine_filter('squared_thumbnail_medium') }}" alt="default pin">
+                {% else %}
+                    <img src="{{ vich_uploader_asset(pin) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ pin.title }}">
+            {% endif %}
+            
+                <h2><a href="{{ path('app_pins_show', {id: pin.id})}}">{{ pin.title }}</a></h2>
+                <p>{{ pin.description | u.truncate(10, '...') }}</p>
+                <p>submitted {{ pin.createdAt|ago }}</p>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p class="mt-5 text-center h1">No pins yet. <a href="{{ path('app_pins_create') }}">Be the first!</a></p>
+    {% endif %}
 {% endblock %}
