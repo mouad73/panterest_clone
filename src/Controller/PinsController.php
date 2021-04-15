@@ -44,9 +44,9 @@ class PinsController extends AbstractController
             // $pin->setDescription($data['description']);
             
             // $pin = $form->getData();
-            $mouad = $userRepo->findOneBy(['email' => 'john.bro@exampe.com']);
+            // $mouad = $userRepo->findOneBy(['email' => 'john.bro@exampe.com']);
             
-            $pin->setUser($mouad);
+            $pin->setUser($this->getUser());
             $em->persist($pin);
             $em->flush();
 
