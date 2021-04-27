@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+    #Container MYSQL
+    db:
+        image: mysql
+        container_name: docker_mysql
+        restart: always
+        volumes: 
+            - db-data:/var/lib/mysql
+        environment: 
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        networks: 
+            - dev
+    #Container PHPMYADMIN
+    phpmyadmin:
+        depends_on:
+            - db
+        image: phpmyadmin
+        container_name: docker_phpmyadmin
+        restart: always
+        environment:
+            PMA_HOST: db           
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        ports:
+            - "8080:80"
+        networks:
+            - dev
+
+networks: 
+    dev:
+
+volumes: 
+    db-data:

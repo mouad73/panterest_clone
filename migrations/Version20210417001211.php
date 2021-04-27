@@ -10,22 +10,22 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201207214109 extends AbstractMigration
+final class Version20210417001211 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return 'Add create_at && updated_at fields to pins tabls and defualt current_timestamp';
+        return 'Add is_verified field to users table';
     }
 
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE pins ADD created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, ADD updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL');
+        $this->addSql('ALTER TABLE users ADD is_verified TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE pins DROP created_at, DROP updated_at');
+        $this->addSql('ALTER TABLE users DROP is_verified');
     }
 }
