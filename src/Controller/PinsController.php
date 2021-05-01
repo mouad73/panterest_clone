@@ -7,6 +7,7 @@ use App\Form\PinType;
 use App\Repository\PinRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +18,19 @@ class PinsController extends AbstractController
     /**
      * @Route("/", name="app_home", methods="GET")
      */
-    public function index(PinRepository $pinRepository, EntityManagerInterface $em): Response
+    public function index(PinRepository $pinRepository, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
+        $query = $pinRepository->createQueryBuilder('a');
+        // dd($query);
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
         $pins = $pinRepository->findBy([], ['createdAt' => 'DESC']);
+        // dd($pagination);
 
-        return $this->render('pins/index.html.twig', compact('pins'));
+        return $this->render('pins/index.html.twig', compact('pagination', 'pins'));
     }
 
     /**

@@ -1,12 +1,12 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block title 'Find all the best pins on earth!' %}
+{# total items count #}
 
 {% block body %}
-    {% if pins|length > 0 %}
+    {% if pagination|length > 0 %}
         <h1 class="text-center text-muted mb-4">{{ pluralize(pins|length, 'Pin') }}</h1>
-
-        {% for row in pins|batch(3) %}
+{% for row in pagination|batch(3) %}
             <div class="row mb-5">
                 {% for pin in row %}
                     <div class="col-md-4">
@@ -25,6 +25,10 @@
                 {% endfor %}
             </div>
         {% endfor %}
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>        
     {% else %}
         <p class="mt-5 text-center h1">No pins yet. <a href="{{ path('app_pins_create') }}">Be the first!</a></p>
     {% endif %}
