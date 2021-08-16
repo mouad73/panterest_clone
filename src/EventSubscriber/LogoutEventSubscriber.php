@@ -20,7 +20,7 @@ class LogoutEventSubscriber implements EventSubscriberInterface
     }
     public function onLogoutEvent(LogoutEvent $event)
     {
-        $this->flashBag->add('success', 'Logged Out Successefully');
+        $this->flashBag->add('success', 'Bye Bye '. $event->getToken()->getUser()->getFullName());
         $event->setResponse(new RedirectResponse($this->urlGenertor->generate('app_home')));
     }
 
