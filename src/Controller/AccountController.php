@@ -19,6 +19,10 @@ class AccountController extends AbstractController
      */
     public function show(): Response
     {
+        if(! $this->getUser()){
+            $this->addFlash('error', 'You Need To Login In First!');
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('account/show.html.twig');
     }
 
@@ -27,6 +31,11 @@ class AccountController extends AbstractController
      */
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
+        if(! $this->getUser()){
+            $this->addFlash('error', 'You Need To Login In First!');
+            return $this->redirectToRoute('app_login');
+        }
+
         $user = $this->getUser();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
@@ -48,6 +57,11 @@ class AccountController extends AbstractController
      */
     public function changePassword(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        if(! $this->getUser()){
+            $this->addFlash('error', 'You Need To Login In First!');
+            return $this->redirectToRoute('app_login');
+        }
+
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordFormType::class, null, [
             'current_password_is_required' => true

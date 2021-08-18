@@ -38,6 +38,17 @@ class PinsController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepo): Response
     {
+        if(! $this->getUser())
+        {
+            $this->addFlash('error', 'Your Need To Login In First!');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if(! $this->getUser()->isVerified())
+        {
+            $this->addFlash('error', 'Your Need To Have A Verifie Account!');
+            return $this->redirectToRoute('app_home');
+        }
 
         $pin = new Pin;
         $form = $this->createForm(PinType::class, $pin);
@@ -90,6 +101,17 @@ class PinsController extends AbstractController
         //     ->add('description')
         //     ->getForm()
         // ;
+        if(!$this->getUser())
+        {
+            $this->addFlash('error', 'Your Need To Login In First!');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if($pin->getUser() !== $this->getUser())
+        {
+            $this->addFlash('error', 'Access Forbiden!');
+            return $this->redirectToRoute('app_home');
+        }
 
         
         $form = $this->createForm(PinType::class, $pin, [
@@ -118,7 +140,17 @@ class PinsController extends AbstractController
      */
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
+        if(! $this->getUser())
+        {
+            $this->addFlash('error', 'Your Need To Login In First!');
+            return $this->redirectToRoute('app_login');
+        }
 
+        if($pin->getUser() !== $this->getUser())
+        {
+            $this->addFlash('error', 'Access Forbiden!');
+            return $this->redirectToRoute('app_home');
+        }
         
         if($this->isCsrfTokenValid('pins_deletion_' . $pin->getId(), $request->request->get('csrf_token'))){
             $em->remove($pin);
