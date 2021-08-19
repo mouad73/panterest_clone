@@ -3,39 +3,45 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangePasswordFormType;
 use App\Form\UserFormType;
+use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @Route("/account")
+ * @IsGranted("ROLE_USER")
+ */
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/account", name="app_account", methods="GET")
+     * @Route("", name="app_account", methods="GET")
      */
     public function show(): Response
     {
-        if(! $this->getUser()){
-            $this->addFlash('error', 'You Need To Login In First!');
-            return $this->redirectToRoute('app_login');
-        }
+        // if(! $this->getUser()){
+        //     $this->addFlash('error', 'You Need To Login In First!');
+        //     return $this->redirectToRoute('app_login');
+        // }
+        // $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('account/show.html.twig');
     }
 
     /**
-     * @Route("/account/edit", name="app_account_edit", methods={"GET" ,"POST"})
+     * @Route("/edit", name="app_account_edit", methods={"GET" ,"POST"})
      */
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
-        if(! $this->getUser()){
-            $this->addFlash('error', 'You Need To Login In First!');
-            return $this->redirectToRoute('app_login');
-        }
-
+        // if(! $this->getUser()){
+        //     $this->addFlash('error', 'You Need To Login In First!');
+        //     return $this->redirectToRoute('app_login');
+        // }
+        // $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
@@ -53,15 +59,15 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/account/change-password", name="app_account_change_password", methods={"GET" ,"POST"})
+     * @Route("/change-password", name="app_account_change_password", methods={"GET" ,"POST"})
      */
     public function changePassword(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        if(! $this->getUser()){
-            $this->addFlash('error', 'You Need To Login In First!');
-            return $this->redirectToRoute('app_login');
-        }
-
+        // if(! $this->getUser()){
+        //     $this->addFlash('error', 'You Need To Login In First!');
+        //     return $this->redirectToRoute('app_login');
+        // }
+        // $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordFormType::class, null, [
             'current_password_is_required' => true
