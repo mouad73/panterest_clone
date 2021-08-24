@@ -11,6 +11,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PinsController extends AbstractController
@@ -35,20 +37,24 @@ class PinsController extends AbstractController
 
     /**
      * @Route("/pins/create", name="app_pins_create", methods={"GET","POST"})
+     * @IsGranted("PIN_CREATE")
      */
     public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepo): Response
     {
-        if(! $this->getUser())
-        {
-            $this->addFlash('error', 'Your Need To Login In First!');
-            return $this->redirectToRoute('app_login');
-        }
+        // $this->denyAccessUnlessGranted('ROLE_USER');
+        // if(! $this->getUser())
+        // {
+        //     // $this->addFlash('error', 'Your Need To Login In First!');
+        //     // return $this->redirectToRoute('app_login');
+        //     throw $this->createAccessDeniedException();
+        // }
 
-        if(! $this->getUser()->isVerified())
-        {
-            $this->addFlash('error', 'Your Need To Have A Verifie Account!');
-            return $this->redirectToRoute('app_home');
-        }
+        // if(! $this->getUser()->isVerified())
+        // {
+        //     // $this->addFlash('error', 'Your Need To Have A Verifie Account!');
+        //     // return $this->redirectToRoute('app_home');
+        //     throw $this->createAccessDeniedException('Your Need To Verieife Your Email Addresse!');
+        // }
 
         $pin = new Pin;
         $form = $this->createForm(PinType::class, $pin);
@@ -93,6 +99,7 @@ class PinsController extends AbstractController
 
     /**
      * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit", methods="GET|PUT")
+     * @IsGranted("PIN_MANAGE", subject="pin")
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $em): Response
     {
@@ -101,17 +108,19 @@ class PinsController extends AbstractController
         //     ->add('description')
         //     ->getForm()
         // ;
-        if(!$this->getUser())
-        {
-            $this->addFlash('error', 'Your Need To Login In First!');
-            return $this->redirectToRoute('app_login');
-        }
+        // if(!$this->getUser())
+        // {
+        //     // $this->addFlash('error', 'Your Need To Login In First!');
+        //     // return $this->redirectToRoute('app_login');
+        //     throw $this->createAccessDeniedException();
+        // }
 
-        if($pin->getUser() !== $this->getUser())
-        {
-            $this->addFlash('error', 'Access Forbiden!');
-            return $this->redirectToRoute('app_home');
-        }
+        // if($pin->getUser() !== $this->getUser())
+        // {
+        //     // $this->addFlash('error', 'Access Forbiden!');
+        //     // return $this->redirectToRoute('app_home');
+        //     throw $this->createAccessDeniedException();
+        // }
 
         
         $form = $this->createForm(PinType::class, $pin, [
@@ -140,17 +149,20 @@ class PinsController extends AbstractController
      */
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
-        if(! $this->getUser())
-        {
-            $this->addFlash('error', 'Your Need To Login In First!');
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('PIN_MANAGER', $pin);
+        // if(! $this->getUser())
+        // {
+        //     // $this->addFlash('error', 'Your Need To Login In First!');
+        //     // return $this->redirectToRoute('app_login');
+        //     throw $this->createAccessDeniedException();
+        // }
 
-        if($pin->getUser() !== $this->getUser())
-        {
-            $this->addFlash('error', 'Access Forbiden!');
-            return $this->redirectToRoute('app_home');
-        }
+        // if($pin->getUser() !== $this->getUser())
+        // {
+        //     // $this->addFlash('error', 'Access Forbiden!');
+        //     // return $this->redirectToRoute('app_home');
+        //     throw $this->createAccessDeniedException();
+        // }
         
         if($this->isCsrfTokenValid('pins_deletion_' . $pin->getId(), $request->request->get('csrf_token'))){
             $em->remove($pin);
